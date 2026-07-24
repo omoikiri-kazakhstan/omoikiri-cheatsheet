@@ -1,0 +1,413 @@
+<meta charset="utf-8">
+<title>Шпаргалка менеджера — Nagare Slim 500 | Omoikiri</title>
+<style>
+  :root{
+    --bg:#f4f6f8; --card:#fff; --ink:#1c2530; --muted:#6b7784;
+    --brand:#e8611c; --brand-d:#c74e11; --line:#e6eaee;
+    --green:#1fa463; --green-bg:#e8f7ef; --warn:#fff4e5; --warn-line:#f2c98a;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:860px;margin:0 auto;padding:24px 16px 80px}
+  header{background:linear-gradient(135deg,var(--brand),var(--brand-d));color:#fff;
+    border-radius:16px;padding:24px 26px;margin-bottom:20px;box-shadow:0 6px 20px rgba(199,78,17,.25)}
+  header h1{margin:0 0 4px;font-size:24px}
+  header p{margin:0;opacity:.95;font-size:15px}
+  .price-badge{display:inline-flex;align-items:baseline;gap:10px;margin-top:14px;
+    background:rgba(255,255,255,.16);padding:8px 14px;border-radius:12px;font-size:15px}
+  .price-badge b{font-size:22px}
+  .price-badge s{opacity:.75}
+  /* language switch */
+  .lang-switch{display:inline-flex;gap:4px;background:rgba(0,0,0,.14);
+    padding:4px;border-radius:10px}
+  .lang-btn{border:0;background:transparent;color:#fff;font-weight:600;font-size:13px;
+    padding:6px 16px;border-radius:7px;cursor:pointer;opacity:.75;transition:.15s}
+  .lang-btn.active{background:#fff;color:var(--brand-d);opacity:1}
+  .lang-hint{font-size:12.5px;opacity:.85;margin-top:8px}
+  .switch-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:16px}
+  .mgr-switch{display:inline-flex;gap:4px;background:rgba(0,0,0,.14);padding:4px;border-radius:10px}
+  .mgr-btn{border:0;background:transparent;color:#fff;font-weight:600;font-size:13px;padding:6px 16px;border-radius:7px;cursor:pointer;opacity:.75;transition:.15s}
+  .mgr-btn.active{background:#fff;color:var(--brand-d);opacity:1}
+  .mgr-btn:focus-visible{outline:2px solid #fff;outline-offset:2px}
+  .warn{background:var(--warn);border:1px solid var(--warn-line);border-radius:12px;
+    padding:14px 16px;margin-bottom:20px;font-size:14px}
+  .warn b{color:var(--brand-d)}
+  section{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:18px 20px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.03)}
+  h2{font-size:16px;margin:0 0 14px;display:flex;align-items:center;gap:8px;
+    text-transform:uppercase;letter-spacing:.03em;color:var(--muted);font-weight:700}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  td:first-child{color:var(--muted);width:44%}
+  td:last-child{font-weight:600}
+  .hl td:last-child{color:var(--green)}
+  /* message cards */
+  .msg{border:1px solid var(--line);border-radius:12px;padding:0;margin-bottom:12px;overflow:hidden}
+  .msg-head{display:flex;justify-content:space-between;align-items:center;
+    background:#f8fafb;padding:9px 14px;border-bottom:1px solid var(--line)}
+  .msg-head .step{font-weight:700;font-size:13px;color:var(--brand-d)}
+  .msg-body{padding:14px;white-space:pre-wrap;font-size:14.5px}
+  .copy{border:0;background:var(--brand);color:#fff;font-weight:600;font-size:12.5px;
+    padding:6px 12px;border-radius:8px;cursor:pointer;transition:.15s;white-space:nowrap}
+  .copy:hover{background:var(--brand-d)}
+  .copy.ok{background:var(--green)}
+  s{color:var(--muted)}
+  .rule-box{background:var(--green-bg);border:1px solid #bfe6d0;border-radius:10px;
+    padding:12px 14px;font-size:14px;margin-bottom:16px}
+  .scenario{font-size:13px;font-weight:700;color:var(--brand-d);
+    margin:18px 0 8px;padding-left:2px;text-transform:uppercase;letter-spacing:.02em}
+  .obj td:first-child{width:38%;color:var(--ink);font-weight:600}
+  .obj td:last-child{font-weight:400}
+  ul.rules{margin:0;padding-left:20px;font-size:14px}
+  ul.rules li{margin-bottom:7px}
+  .foot{text-align:center;color:var(--muted);font-size:13px;margin-top:24px}
+  .contact{font-size:14px;color:var(--muted);margin-top:6px}
+  .contact b{color:var(--ink)}
+  html{scroll-behavior:smooth}
+  section{scroll-margin-top:56px}
+  .toc{position:sticky;top:0;z-index:10;background:var(--bg);display:flex;flex-wrap:wrap;gap:6px;padding:10px 0;margin-bottom:12px;border-bottom:1px solid var(--line)}
+  .toc a{font-size:12.5px;font-weight:600;color:var(--brand-d);background:#fff;border:1px solid var(--line);border-radius:20px;padding:5px 11px;text-decoration:none;white-space:nowrap;transition:.15s}
+  .toc a:hover{background:var(--brand);color:#fff;border-color:var(--brand)}
+  /* language toggling: RU default, KZ when body.lang-kz */
+  .kz-text{display:none}
+  body.lang-kz .ru-text{display:none}
+  body.lang-kz .kz-text{display:inline}
+  .kz-badge{display:none}
+  body.lang-kz .kz-badge{display:inline}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>🗒 Шпаргалка менеджера</h1>
+    <p>Измельчитель пищевых отходов <b>Omoikiri Nagare Slim 500</b></p>
+    <div class="price-badge">🔥 <b>149 880 тг</b> <s>186 880 тг</s> · выгода 37 000 тг</div>
+    <div class="contact" style="color:#fff;opacity:.9;margin-top:10px">📞 8 (707) 783-28-88 · доставка бесплатная · в наличии</div>
+    <div class="switch-row">
+      <div class="lang-switch">
+        <button class="lang-btn active" data-lang="ru">🇷🇺 Русский</button>
+        <button class="lang-btn" data-lang="kz">🇰🇿 Қазақша</button>
+      </div>
+      <div class="mgr-switch">
+        <button class="mgr-btn active" data-mgr="Мади">👤 Мади</button>
+        <button class="mgr-btn" data-mgr="Ренат">👤 Ренат</button>
+      </div>
+    </div>
+    <div class="lang-hint">Переключатель меняет готовые ответы клиенту (шаблоны + возражения). Справочные блоки — на русском.</div>
+  </header>
+
+  <nav id="toc" class="toc"></nav>
+
+  <div class="warn">
+    ⚠️ <b>Сверь старую цену.</b> В рекламе — 186 880 тг, на сайте у модели указано «была 165 880 тг».
+    Текущая акционная 149 880 тг совпадает. Используй <b>одну и ту же</b> старую цену везде (реклама = переписка),
+    иначе клиент заметит расхождение. В шаблонах ниже стоит 186 880 — поправь при необходимости.
+  </div>
+
+  <section>
+    <h2>📋 Характеристики</h2>
+    <table>
+      <tr><td>Мощность</td><td>0,5 л.с. (370 Вт)</td></tr>
+      <tr><td>Обороты диска</td><td>3000 об/мин</td></tr>
+      <tr><td>Напряжение</td><td>220 В</td></tr>
+      <tr><td>Тип мотора</td><td>магнитный</td></tr>
+      <tr><td>Тип переработки</td><td>проточный</td></tr>
+      <tr><td>Дробильное кольцо и кулачки</td><td>нержавеющая сталь</td></tr>
+      <tr><td>Звукоизоляция</td><td>полная (тихая работа)</td></tr>
+      <tr><td>Защита от перегрузок</td><td>автоматическая</td></tr>
+      <tr><td>Управление</td><td>пневмокнопка из нержавейки</td></tr>
+      <tr><td>Цвет</td><td>оранжевый</td></tr>
+      <tr class="hl"><td>Гарантия</td><td>5 лет</td></tr>
+      <tr><td>Отводная арматура</td><td>приобретается отдельно</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>📊 Подбор по составу семьи</h2>
+    <div class="rule-box">Главный вопрос при подборе — <b>сколько человек в семье</b>. Не предлагай слабую модель на большую семью: под высокую нагрузку она быстро перегружается, будет возврат и недовольство. Честная рекомендация мощнее = доверие и больший чек.</div>
+    <table class="obj">
+      <tr><td>Модель</td><td>Мощность / обороты — для семьи — цена по акции</td></tr>
+      <tr><td>Nagare Slim 500</td><td>0,5 л.с. · 3000 — <b>1–3 чел.</b> — 149 880 тг</td></tr>
+      <tr><td>Nagare 500</td><td>0,5 л.с. · 2800 — <b>1–3 чел.</b> — от 178 880 тг</td></tr>
+      <tr><td>Nagare Slim 900 ⭐</td><td>0,75 л.с. · 3000 — <b>4–6 чел.</b> — от 200 880 тг</td></tr>
+      <tr><td>Nagare 750</td><td>0,75 л.с. · 2800 — <b>4–6 чел.</b> — от 215 880 тг</td></tr>
+      <tr><td>Nagare 1000</td><td>1 л.с. · 2800 — <b>6+ чел. / интенсивно</b> — от 247 880 тг</td></tr>
+      <tr><td>Nagare Slim 1250</td><td>1 л.с. · 3000 — <b>6+ чел. / интенсивно</b> — 246 880–300 880 тг</td></tr>
+    </table>
+    <div style="font-size:13px;color:var(--muted);margin-top:10px">⭐ Slim 900 — самый частый апгрейд со Slim 500: та же тонкая тихая серия, мощность в 1,5 раза выше. Все модели — нержавеющие ножи, полная звукоизоляция, гарантия 5 лет, бесплатная доставка.</div>
+  </section>
+
+  <section>
+    <h2>💬 Цепочка сообщений</h2>
+
+    <div class="rule-box">🎯 Принцип подачи цены: <b>ценность → цена → вопрос</b>. Цена не должна быть ни первым, ни последним словом в сообщении — оборачивай её в выгоду и заканчивай вопросом, чтобы разговор продолжался.</div>
+
+    <div class="scenario">Сценарий А · клиент спросил цену прямо или пришёл из рекламы с ценой</div>
+    <div class="msg">
+      <div class="msg-head"><span class="step">1А · Ответ с ценой</span><button class="copy">Копировать</button></div>
+      <div class="msg-body"><span class="ru-text">Здравствуйте! 😊 Меня зовут <span class="mgr">Мади</span>, компания Omoikiri.
+
+Nagare Slim 500 — тихий, с нержавеющими дробильными элементами и гарантией 5 лет. Сейчас по акции 149 880 тг вместо 186 880 тг (ваша выгода 37 000 тг 🔥), в наличии, доставка бесплатная.
+
+Подскажите, как к вам обращаться и из какого вы города — подберу под вашу кухню и оформим 👍</span><span class="kz-text">Сәлеметсіз бе! 😊 Менің атым <span class="mgr">Мади</span>, Omoikiri компаниясынанмын.
+
+Nagare Slim 500 — тыныш, тот баспайтын ұсақтағыш бөлшектермен және 5 жыл кепілдікпен. Қазір акция бойынша 149 880 тг (бұрын 186 880 тг, үнемдейсіз 37 000 тг 🔥), қоймада бар, жеткізу тегін.
+
+Айтыңызшы, атыңыз кім және қай қаладансыз — ас үйіңізге сай таңдап, рәсімдейміз 👍</span></div>
+    </div>
+
+    <div class="scenario">Сценарий Б · клиент просто «интересует измельчитель», про цену не спрашивал</div>
+    <div class="msg">
+      <div class="msg-head"><span class="step">1Б · Ответ без цены</span><button class="copy">Копировать</button></div>
+      <div class="msg-body"><span class="ru-text">Здравствуйте! 😊 Меня зовут <span class="mgr">Мади</span>, компания Omoikiri. Спасибо за интерес к нашим измельчителям!
+
+Подберу для вас идеальный вариант. Подскажите, как к вам обращаться, сколько человек в семье и какая у вас мойка? На основе этого предложу подходящую модель с ценой и наличием 👌</span><span class="kz-text">Сәлеметсіз бе! 😊 Менің атым <span class="mgr">Мади</span>, Omoikiri компаниясынанмын. Измельчительдерімізге қызығушылығыңызға рахмет!
+
+Сізге ең қолайлы нұсқаны таңдаймын. Айтыңызшы, атыңыз кім, отбасыңызда неше адам бар және мойкаңыз қандай? Соған қарай бағасы мен барын қоса, лайықты модель ұсынамын 👌</span></div>
+    </div>
+
+    <div class="msg">
+      <div class="msg-head"><span class="step">2 · Уточнение (если ещё не спросил)</span><button class="copy">Копировать</button></div>
+      <div class="msg-body"><span class="ru-text">Чтобы точно подошло, подскажите:
+1. Сколько человек в семье?
+2. Какая у вас мойка?
+
+На основе этого подтвержу совместимость 👌</span><span class="kz-text">Дәл сай келуі үшін айтыңызшы:
+1. Отбасыңызда неше адам бар?
+2. Мойкаңыз қандай?
+
+Соған қарай үйлесімділігін растаймын 👌</span></div>
+    </div>
+
+    <div class="scenario">Сценарий Б · цену называем 2–3 сообщением, когда уже показана ценность</div>
+    <div class="msg">
+      <div class="msg-head"><span class="step">2Б · Презентация с ценой</span><button class="copy">Копировать</button></div>
+      <div class="msg-body"><span class="ru-text">Отлично! Под вашу кухню идеально подойдёт Nagare Slim 500: мощность 0,5 л.с., 3000 об/мин, полностью тихая работа, нержавеющие ножи и гарантия 5 лет. Ставится на стандартную мойку.
+
+Сейчас по акции — 149 880 тг вместо 186 880 тг (выгода 37 000 тг 🔥), доставка бесплатная. Нравится вариант? Подскажите город — и всё оформим 👍</span><span class="kz-text">Тамаша! Ас үйіңізге Nagare Slim 500 дәл келеді: қуаты 0,5 а.к., 3000 айн/мин, толық тыныш жұмыс, тот баспайтын пышақтар және 5 жыл кепілдік. Стандартты мойкаға орнатылады.
+
+Қазір акция бойынша — 149 880 тг (бұрын 186 880 тг, үнемдейсіз 37 000 тг 🔥), жеткізу тегін. Ұнады ма? Қай қаладансыз — бәрін рәсімдейміз 👍</span></div>
+    </div>
+
+    <div class="msg">
+      <div class="msg-head"><span class="step">3 · Подтверждение выбора</span><button class="copy">Копировать</button></div>
+      <div class="msg-body"><span class="ru-text">Отличный выбор! 👍 Для семьи из трёх человек Nagare Slim 500 — то, что нужно: мощность 0,5 л.с., 3000 об/мин, полностью тихая работа и гарантия 5 лет. Ставится на стандартную мойку, с вашей всё совместимо.
+
+Цена по акции 149 880 тг, доставка бесплатная. Нравится вариант? Подскажите город — и всё оформим 👍</span><span class="kz-text">Тамаша таңдау! 👍 Үш адамдық отбасына Nagare Slim 500 дәл келеді: қуаты 0,5 а.к., 3000 айн/мин, толық тыныш жұмыс және 5 жыл кепілдік. Стандартты мойкаға орнатылады, сіздікімен толық үйлесімді.
+
+Акция бағасы 149 880 тг, жеткізу тегін. Ұнады ма? Қай қаладансыз — бәрін рәсімдейміз 👍</span></div>
+    </div>
+
+    <div class="msg">
+      <div class="msg-head"><span class="step">4 · Закрытие</span><button class="copy">Копировать</button></div>
+      <div class="msg-body"><span class="ru-text">[Имя], принято! Оформляю Nagare Slim 500 по акции 149 880 тг с бесплатной доставкой в [город]. Как вам удобнее оплатить — Kaspi, перевод, рассрочка, Халык банк или наличными в офисе?</span><span class="kz-text">[Аты], қабылдадым! Nagare Slim 500-ді акция бойынша 149 880 тг, [қала] қаласына тегін жеткізумен рәсімдеп жатырмын. Қалай төлеген ыңғайлы — Kaspi, аударым, рассрочка, Халық банк әлде кеңседе қолма-қол ақшамен?</span></div>
+    </div>
+
+    <div class="scenario">Первый ответ · клиент назвал только состав семьи (6+ человек)</div>
+    <div class="msg">
+      <div class="msg-head"><span class="step">1В · Большая семья → Slim 900</span><button class="copy">Копировать</button></div>
+      <div class="msg-body"><span class="ru-text">Отлично, спасибо! 😊 Для семьи из [N] человек нужна модель помощнее — оптимально Nagare Slim 900: мощность 0,75 л.с., 3000 об/мин, компактный и тихий, с гарантией 5 лет. Легко справится с вашей нагрузкой.
+
+Цена — 200 880 тг, в наличии, доставка бесплатная.
+
+Подскажите, как к вам обращаться и из какого вы города — оформим? 👍</span><span class="kz-text">Тамаша, рахмет! 😊 [N] адамдық отбасына қуаттырақ модель керек — Nagare Slim 900 оңтайлы: қуаты 0,75 а.к., 3000 айн/мин, ықшам әрі тыныш, 5 жыл кепілдікпен. Сіздің жүктемеңізді оңай көтереді.
+
+Бағасы — 200 880 тг, қоймада бар, жеткізу тегін.
+
+Айтыңызшы, атыңыз кім және қай қаладансыз — рәсімдейміз бе? 👍</span></div>
+    </div>
+
+    <div class="scenario">Апсейл · большая семья (5+ человек) — Slim 500 слабовата</div>
+    <div class="msg">
+      <div class="msg-head"><span class="step">5 · Рекомендация мощнее</span><button class="copy">Копировать</button></div>
+      <div class="msg-body"><span class="ru-text">Один момент: для семьи из [N] человек Slim 500 будет уже на пределе. Под такую нагрузку советую помощнее — оптимально Nagare Slim 900 (0,75 л.с., такой же компактный и тихий) за 200 880 тг, или Nagare 1000 (1 л.с., максимум) за 247 880 тг. Оба с гарантией 5 лет и бесплатной доставкой.
+
+Какую возьмём? 👌</span><span class="kz-text">Бір маңызды жайт: [N] адамдық отбасына Slim 500 шамасы жетпей қалады. Мұндай жүктемеге қуаттырағын ұсынамын — Nagare Slim 900 (0,75 а.к., дәл сондай ықшам әрі тыныш) 200 880 тг, немесе Nagare 1000 (1 а.к., максималды) 247 880 тг. Екеуі де 5 жыл кепілдікпен, жеткізу тегін.
+
+Қайсысын аламыз? 👌</span></div>
+    </div>
+
+    <div class="scenario">Кросс-продажа · клиент меняет / хочет мойку</div>
+    <div class="msg">
+      <div class="msg-head"><span class="step">6 · Мойка + измельчитель комплектом</span><button class="copy">Копировать</button></div>
+      <div class="msg-body"><span class="ru-text">Да, у нас есть мойки Omoikiri 👍 Раз вы всё равно меняете мойку — можем подобрать мойку и измельчитель комплектом, тогда они идеально подойдут друг к другу и точно будут совместимы.
+
+Подскажите, какой у вас цвет/стиль кухни — подберу мойку в тон и измельчитель к ней 👌</span><span class="kz-text">Иә, бізде Omoikiri мойкалары бар 👍 Мойканы бәрібір ауыстыратын болсаңыз — мойка мен измельчительді кешенді таңдап беруге болады, сонда олар бір-біріне тамаша сай әрі толық үйлесімді болады.
+
+Айтыңызшы, ас үйіңіздің түсі/стилі қандай — түсіне сай мойка мен оған измельчитель таңдаймын 👌</span></div>
+    </div>
+
+    <div class="scenario">Перехват · клиент смотрит другой бренд (Grohe, Blanco и т.п.)</div>
+    <div class="msg">
+      <div class="msg-head"><span class="step">7 · Другой бренд → перехват на Omoikiri</span><button class="copy">Копировать</button></div>
+      <div class="msg-body"><span class="ru-text">[Бренд] — достойный бренд 👍 Но раз измельчитель вы берёте Omoikiri, присмотритесь и к нашей мойке: мойки — профильный продукт Omoikiri, большой выбор гранита и керамики, любых цветов и размеров под вашу кухню.
+
+С измельчителем наша мойка сочетается идеально — гарантированная совместимость без переходников. Плюс сейчас на мойки скидка до 30%, а комплектом с измельчителем ещё выгоднее.
+
+Подскажите цвет/стиль кухни и размер под мойку — подберу пару вариантов, сравните и решите сами 😊</span><span class="kz-text">[Бренд] — жақсы бренд 👍 Бірақ измельчительді Omoikiri-ден алатын болсаңыз, біздің мойкаға да назар аударыңыз: мойкалар — Omoikiri-дің негізгі өнімі, гранит пен керамиканың үлкен таңдауы, ас үйіңізге кез келген түс пен өлшем.
+
+Біздің мойка измельчительмен тамаша үйлеседі — өтпелі бөлшектерсіз кепілдендірілген үйлесімділік. Оның үстіне қазір мойкаларға 30%-ға дейін жеңілдік, ал измельчительмен кешенді алса — одан да тиімді.
+
+Ас үйіңіздің түсі/стилі мен мойкаға арналған орынды айтыңызшы — бірнеше нұсқа таңдап беремін, салыстырып, өзіңіз шешесіз 😊</span></div>
+    </div>
+
+    <div class="scenario">После брони · напоминание, чтобы держать контакт</div>
+    <div class="msg">
+      <div class="msg-head"><span class="step">8 · После брони</span><button class="copy">Копировать</button></div>
+      <div class="msg-body"><span class="ru-text">[Имя], забронировал за вами Nagare Slim 500 по акции 149 880 тг 👍 Держу бронь до [дата]. Как будете готовы — просто напишите, оформлю за пару минут с бесплатной доставкой 😊</span><span class="kz-text">[Аты], сізге Nagare Slim 500-ді акция бойынша 149 880 тг-ге брондап қойдым 👍 Бронь [күн]-ге дейін сақтаймын. Дайын болғанда жазып қойыңыз — бірнеше минутта тегін жеткізумен рәсімдеймін 😊</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>🚰 Обращение по мойке (а не измельчителю)</h2>
+    <div class="rule-box">Здесь другие вопросы: не состав семьи, а цвет/стиль кухни, размер шкафа под мойку и число чаш. Подобрал мойку — предложи к ней измельчитель.</div>
+
+    <div class="scenario">Первый ответ · клиент интересуется мойкой</div>
+    <div class="msg">
+      <div class="msg-head"><span class="step">М1 · Ответ + уточнение по мойке</span><button class="copy">Копировать</button></div>
+      <div class="msg-body"><span class="ru-text">Здравствуйте! 😊 Меня зовут <span class="mgr">Мади</span>, компания Omoikiri. Спасибо за интерес к нашим мойкам!
+
+У нас большой выбор — гранит и керамика, разные цвета и размеры, одно- и двухчашевые. Подберу идеальный вариант под вашу кухню. Подскажите:
+1. Какой цвет/стиль кухни?
+2. Ширина шкафа под мойку?
+3. Сколько чаш нужно — одна или две?
+
+На основе этого предложу подходящие модели с ценами. Сейчас на мойки скидка до 30% + бесплатная доставка 👍</span><span class="kz-text">Сәлеметсіз бе! 😊 Менің атым <span class="mgr">Мади</span>, Omoikiri компаниясынанмын. Мойкаларымызға қызығушылығыңызға рахмет!
+
+Таңдау үлкен — гранит пен керамика, әртүрлі түс пен өлшем, бір және екі шұңғылшалы. Ас үйіңізге ең қолайлы нұсқаны таңдаймын. Айтыңызшы:
+1. Ас үйіңіздің түсі/стилі қандай?
+2. Мойкаға арналған шкафтың ені қандай?
+3. Неше шұңғылша керек — бір ме, екі ме?
+
+Соған қарай бағасымен қоса лайықты модельдер ұсынамын. Қазір мойкаларға 30%-ға дейін жеңілдік + тегін жеткізу 👍</span></div>
+    </div>
+
+    <div class="scenario">Кросс-продажа · измельчитель к мойке</div>
+    <div class="msg">
+      <div class="msg-head"><span class="step">М2 · Измельчитель к мойке</span><button class="copy">Копировать</button></div>
+      <div class="msg-body"><span class="ru-text">Кстати, к мойке отлично идёт измельчитель пищевых отходов Omoikiri — остатки еды уходят прямо в слив, без запаха и засоров в раковине. Показать варианты? Комплектом с мойкой выйдет выгоднее 👍</span><span class="kz-text">Айтпақшы, мойкаға Omoikiri ас қалдықтарын ұсақтағышы тамаша келеді — тамақ қалдықтары тікелей ағызбаға кетеді, раковинада иіс пен бітелу болмайды. Нұсқаларын көрсетейін бе? Мойкамен кешенді алса тиімдірек 👍</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>💳 Оплата и 🚚 доставка</h2>
+    <table>
+      <tr><td>Способы оплаты</td><td>Kaspi · перевод · рассрочка · Халык банк · наличными в офисе</td></tr>
+      <tr class="hl"><td>Астана и Алматы</td><td>в течение дня или когда удобно</td></tr>
+      <tr><td>Другие города Казахстана</td><td>5–7 рабочих дней (Jet Logistic)</td></tr>
+      <tr class="hl"><td>Стоимость доставки</td><td>бесплатно</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>🏬 Приглашение в шоурум</h2>
+    <div class="rule-box">Отправляй, когда клиент выбирает мойку/смеситель или сомневается — вживую он решается быстрее. Выбери нужный город/адрес.</div>
+
+    <div class="scenario">Шоурум · Акмешит 19/1</div>
+    <div class="msg">
+      <div class="msg-head"><span class="step">📍 Акмешит 19/1 НП1</span><button class="copy">Копировать</button></div>
+      <div class="msg-body"><span class="ru-text">Приглашаю вас посетить наш шоурум по адресу:
+📍 Акмешит 19/1 НП1
+https://go.2gis.com/TFH7d
+График работы: с 10:00 до 20:00 каждый день, без выходных 🙌
+
+Тут вы сможете рассмотреть варианты моек и смесителей, тактильно почувствовать разницу, рады будем вас проконсультировать и помочь с подбором ☺️</span><span class="kz-text">Сізді біздің шоурумға шақырамыз:
+📍 Ақмешіт 19/1 НП1
+https://go.2gis.com/TFH7d
+Жұмыс уақыты: күн сайын 10:00-ден 20:00-ге дейін, демалыссыз 🙌
+
+Мұнда мойка мен смесительдердің нұсқаларын көріп, айырмашылығын қолмен сезіне аласыз, қуана кеңес беріп, таңдауға көмектесеміз ☺️</span></div>
+    </div>
+
+    <div class="scenario">Шоурум · Астана, Турара Рыскулова 3</div>
+    <div class="msg">
+      <div class="msg-head"><span class="step">📍 Турара Рыскулова 3 (напротив MEGA Silk Way)</span><button class="copy">Копировать</button></div>
+      <div class="msg-body"><span class="ru-text">Приглашаю вас посетить наш шоурум по адресу:
+📍 Улица Турара Рыскулова 3 (напротив MEGA Silk Way)
+https://2gis.kz/astana/geo/70000001114363964
+График работы: с 10:00 до 20:00 каждый день, без выходных 🙌
+
+Тут вы сможете рассмотреть варианты моек и смесителей, тактильно почувствовать разницу, рады будем вас проконсультировать и помочь с подбором ☺️</span><span class="kz-text">Сізді біздің шоурумға шақырамыз:
+📍 Тұрар Рысқұлов көшесі 3 (MEGA Silk Way қарсысында)
+https://2gis.kz/astana/geo/70000001114363964
+Жұмыс уақыты: күн сайын 10:00-ден 20:00-ге дейін, демалыссыз 🙌
+
+Мұнда мойка мен смесительдердің нұсқаларын көріп, айырмашылығын қолмен сезіне аласыз, қуана кеңес беріп, таңдауға көмектесеміз ☺️</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>🛡 Работа с возражениями</h2>
+    <table class="obj">
+      <tr><td>«Дорого»</td><td><span class="ru-text">Это оригинал Omoikiri с гарантией 5 лет, нержавеющими дробильными элементами и тихой работой. Плюс сейчас скидка 37 000 тг и бесплатная доставка — выгоднее не будет.</span><span class="kz-text">Бұл түпнұсқа Omoikiri — 5 жыл кепілдік, тот баспайтын ұсақтағыш бөлшектер және тыныш жұмыс. Оның үстіне қазір 37 000 тг жеңілдік және тегін жеткізу — бұдан тиімдісі болмайды.</span></td></tr>
+      <tr><td>«Подумаю»</td><td><span class="ru-text">Конечно! Только учтите — модель очень ходовая, берут активно и партии разбирают быстро. Чтобы точно не упустить, могу забронировать за вами на пару дней. Оформим бронь?</span><span class="kz-text">Әрине! Тек ескеріңіз — бұл модель өте өтімді, белсенді алып жатыр, партиялар тез сатылады. Жіберіп алмау үшін сізге бірнеше күнге брондап қоя аламын. Броньдайық па?</span></td></tr>
+      <tr><td>«Доставка платная?»</td><td><span class="ru-text">Нет, доставка полностью бесплатная 👍 По Астане и Алматы — в течение дня, по другим городам — 5–7 рабочих дней. Как будете готовы — оформлю доставку 😊</span><span class="kz-text">Жоқ, жеткізу толық тегін 👍 Астана мен Алматы бойынша — сол күні, басқа қалаларға — 5–7 жұмыс күні. Дайын болсаңыз — жеткізуді рәсімдеймін 😊</span></td></tr>
+      <tr><td>«Когда привезёте?»</td><td><span class="ru-text">По Астане и Алматы доставим в течение дня или когда вам удобно. В другие города — 5–7 рабочих дней через Jet Logistic.</span><span class="kz-text">Астана мен Алматыға сол күні немесе сізге ыңғайлы уақытта жеткіземіз. Басқа қалаларға — Jet Logistic арқылы 5–7 жұмыс күні.</span></td></tr>
+      <tr><td>«Шумит?»</td><td><span class="ru-text">Нет, у модели полная звукоизоляция — работает очень тихо.</span><span class="kz-text">Жоқ, модельде толық дыбыс оқшаулағыш бар — өте тыныш жұмыс істейді.</span></td></tr>
+      <tr><td>«Сложно ставить?»</td><td><span class="ru-text">Устанавливается на стандартную мойку. Обратите внимание: отводная арматура приобретается отдельно — подскажу, что понадобится.</span><span class="kz-text">Стандартты мойкаға орнатылады. Назар аударыңыз: бұрып әкететін арматура бөлек сатып алынады — не қажет екенін айтып беремін.</span></td></tr>
+      <tr><td>Молчит после цены</td><td><span class="ru-text">Через пару часов: «Остались вопросы по Nagare Slim 500? Готов помочь с подбором 😊»</span><span class="kz-text">Бірер сағаттан кейін: «Nagare Slim 500 бойынша сұрақтарыңыз бар ма? Таңдауға көмектесуге дайынмын 😊»</span></td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>✅ Правила</h2>
+    <ul class="rules">
+      <li>Отвечай <b>за 5–15 минут</b> — по рекламным лидам скорость решает.</li>
+      <li><b>Всегда заканчивай вопросом или призывом</b> — не оставляй сообщение «в никуда».</li>
+      <li>Узнал имя → <b>обращайся по нему</b> хотя бы через раз.</li>
+      <li><b>Одна цена везде</b>: реклама = переписка.</li>
+      <li>Отвечай <b>на языке клиента</b> — написал на казахском, отвечай на казахском (переключатель вверху).</li>
+      <li>Не называй характеристики «на память» — только из таблицы выше.</li>
+      <li>Про <b>отводную арматуру</b> предупреждай заранее, чтобы при установке не было сюрприза.</li>
+      <li><b>Не критикуй конкурентов</b> — признай бренд («достойный»), затем покажи выгоду Omoikiri: совместимость с измельчителем, выбор, скидка.</li>
+    </ul>
+  </section>
+
+  <div class="foot">Данные с сайта omoikiri-kazakhstan · оплата: Kaspi / перевод / рассрочка / Халык / наличные · доставка бесплатно · 🇷🇺/🇰🇿</div>
+</div>
+
+<script>
+  // copy buttons
+  document.querySelectorAll('.copy').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var text = btn.closest('.msg').querySelector('.msg-body').innerText;
+      navigator.clipboard.writeText(text).then(function(){
+        var old = btn.textContent;
+        btn.textContent = '✓ Скопировано';
+        btn.classList.add('ok');
+        setTimeout(function(){ btn.textContent = old; btn.classList.remove('ok'); }, 1500);
+      });
+    });
+  });
+  // language switch
+  document.querySelectorAll('.lang-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.body.classList.toggle('lang-kz', btn.dataset.lang === 'kz');
+      document.querySelectorAll('.lang-btn').forEach(function(b){
+        b.classList.toggle('active', b === btn);
+      });
+    });
+  });
+  // manager name switch
+  document.querySelectorAll('.mgr-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var name = btn.dataset.mgr;
+      document.querySelectorAll('.mgr').forEach(function(el){ el.textContent = name; });
+      document.querySelectorAll('.mgr-btn').forEach(function(b){ b.classList.toggle('active', b === btn); });
+    });
+  });
+  // auto table of contents
+  (function(){
+    var toc = document.getElementById('toc');
+    if(!toc) return;
+    document.querySelectorAll('section > h2').forEach(function(h2, i){
+      var sec = h2.parentElement;
+      if(!sec.id) sec.id = 'sec-' + i;
+      var a = document.createElement('a');
+      a.href = '#' + sec.id;
+      a.textContent = h2.textContent.trim();
+      toc.appendChild(a);
+    });
+  })();
+</script>
